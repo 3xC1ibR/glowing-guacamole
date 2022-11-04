@@ -1,0 +1,15 @@
+name: Build and Deploy to GKE
+
+on:
+  push:
+    branches: "annealing/v**"
+#    paths: 'frontend/**'
+jobs:
+  build:
+    name: Build the thing
+    runs-on: ubuntu-latest
+    steps:
+    - name: echo
+      run: |
+        echo '...bulding'
+
