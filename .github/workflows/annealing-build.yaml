@@ -27,7 +27,7 @@ jobs:
       uses: actions/checkout@v3
     - name: set variables
       run: |
-        if [[ $"${{github.event_name}}" == "push" ]]; then
+        if ${{ github.ref == 'refs/heads/main' }}
           echo "ENV=prod" >> $GITHUB_ENV
         else
           echo "ENV=dev" >> $GITHUB_ENV
@@ -53,6 +53,6 @@ jobs:
       uses: ncipollo/release-action@v1
       with:
         name: ${{ env.SERVICE_NAME }}
-        draft: true
+        draft: ${{ github.ref != 'refs/heads/main' }}
         tag: "${{ env.SERVICE_NAME}}/${{ env.version }}"
 
