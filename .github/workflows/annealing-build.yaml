@@ -14,6 +14,9 @@ on:
 #      - "release/annealing/v**"
 #      - '**'
 #      - "main"
+env:
+  SERVICE_name: 'annealing-service'
+  SERVICE_PATH: 'services/annealing-service'
 jobs:
   build:
 
@@ -42,10 +45,12 @@ jobs:
         python .github/workflows/deploy.py --env $ENV
     - name: publish release
       run: |
-        cat somefile
+        echo "endpoint=$(cat somefile) >> $GITHUB_ENV
+        echo "version=$(cat $SERVICE_PATH/version) >> $GITHUB_ENV
+
     - name: Create Release
       uses: ncipollo/release-action@v1
       with:
-        name: 'apples'
-        tag: 'cocoa'
+        name: $SERVICE_NAME
+        tag: "${SERVICE_NAME}/${version}"
 
