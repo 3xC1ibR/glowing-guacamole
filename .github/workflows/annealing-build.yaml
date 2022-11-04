@@ -6,12 +6,14 @@ on:
   # run on dev branches
   push:
     branches:
-      - "release/annealing/v**"
-      - '**'
-#    paths: 'frontend/**'
-  pull_request:
-    branches:
       - "main"
+  pull_request:
+    paths:
+      - '.github/workflows/annealing-build.yaml'
+#    branches:
+#      - "release/annealing/v**"
+#      - '**'
+#      - "main"
 jobs:
   build:
 
