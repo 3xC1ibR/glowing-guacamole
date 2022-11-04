@@ -1,4 +1,4 @@
-name: Build and Deploy to GKE
+name: build and deploy annealing
 
 on:
   # run manually
@@ -21,7 +21,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: checkout repo
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
     - name: set variables
       run: |
         if [[ $"${{github.event_name}}" == "push" ]]; then
@@ -34,7 +34,7 @@ jobs:
         echo '...building'
         echo $ENV
     - name: setup python
-      uses: actions/setup-python@v2
+      uses: actions/setup-python@v4
       with:
         python-version: 3.8
     - name: deploy
