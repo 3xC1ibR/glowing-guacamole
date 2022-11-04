@@ -53,5 +53,6 @@ jobs:
       uses: ncipollo/release-action@v1
       with:
         name: ${{ env.SERVICE_NAME }}
+        draft: true
         tag: "${{ env.SERVICE_NAME}}/${{ env.version }}"
 
