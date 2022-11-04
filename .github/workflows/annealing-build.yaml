@@ -1,15 +1,40 @@
 name: Build and Deploy to GKE
 
 on:
+  # run manually
+  workflow_dispatch:
+  # run on dev branches
   push:
-    branches: "annealing/v**"
+    branches:
+      - "release/annealing/v**"
+      - '**'
 #    paths: 'frontend/**'
+  pull_request:
+    branches:
+      - "main"
 jobs:
   build:
     name: Build the thing
     runs-on: ubuntu-latest
     steps:
+    - name: set variables
+      run: |
+        if [[ $"${{github.event_name}}" == "push" ]]; then
+          echo "::set-output name=app_env::prod"
+          echo "ENV=prod" >> $GITHUB_ENV
+        else
+          echo "ENV=dev" >> $GITHUB_ENV
+        fi
     - name: echo
       run: |
-        echo '...bulding'
+        echo '...building'
+        echo $ENV
+    - name: setup python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8
+    - name: deploy
+      run: |
+        python .github/workflows/deploy.py --evn $ENV
+
 
