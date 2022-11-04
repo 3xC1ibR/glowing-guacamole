@@ -51,6 +51,6 @@ jobs:
     - name: Create Release
       uses: ncipollo/release-action@v1
       with:
-        name: $SERVICE_NAME
-        tag: "${SERVICE_NAME}/${version}"
+        name: ${{ env.SERVICE_NAME }}
+        tag: "${{ env.SERVICE_NAME }}/${{ env.version }}"
 
