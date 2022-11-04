@@ -59,7 +59,7 @@ jobs:
     needs: build
     environment:
       name: dev
-      url: 'google.com'
+      url: 'https://google.com'
     steps:
       - name: checkout repo
         uses: actions/checkout@v3
