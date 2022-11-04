@@ -53,5 +53,5 @@ jobs:
       uses: ncipollo/release-action@v1
       with:
         name: ${{ env.SERVICE_NAME }}
-        tag: ${{ env.tag}}
+        tag: "${{ env.SERVICE_NAME}}/${{ env.tag}}"
 
