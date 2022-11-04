@@ -47,10 +47,11 @@ jobs:
       run: |
         echo "endpoint=$(cat somefile) >> $GITHUB_ENV
         echo "version=$(cat $SERVICE_PATH/version)" >> $GITHUB_ENV
-#        echo "tag=${{ ev.SERVICE_NAME}}/$version" >> $GITHUB_ENV
+        echo "tag=${{ env.SERVICE_NAME}}/$version" >> $GITHUB_ENV
+
     - name: Create Release
       uses: ncipollo/release-action@v1
       with:
         name: ${{ env.SERVICE_NAME }}
-        tag: "${{ env.SERVICE_NAME}}/${{ env.version}}"
+        tag: ${{ env.tag}}
 
