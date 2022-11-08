@@ -50,17 +50,24 @@ jobs:
         else
           echo "ENV=dev" >> $GITHUB_ENV
         fi
+
     - name: echo
       run: |
         echo '...building'
         echo $ENV
+
     - name: setup python
       uses: actions/setup-python@v4
       with:
         python-version: 3.8
+
     - name: deploy
       run: |
         python .github/workflows/deploy.py --env $ENV
+    outputs:
+      version: ${{ steps.get_version.outputs.result }}
+      version_notes: ${{ steps.get_version_notes.outputs.result }}
+      service_description: ${{ steps.get_service_description.outputs.result }}
 
   dev-deploy:
     permissions:
@@ -84,8 +91,8 @@ jobs:
         with:
           token: '${{ github.token }}'
           environment: dev
-          payload: '{"endpoint": 89483999222, "service": "${{ env.SERVICE_NAME }}", "version":"${{ steps.get_version.outputs.result }}", "version_notes": "${{ steps.get_version_notes.outputs.result }}" }'
-          description: ${{ steps.get_service_description.outputs.result }}
+          payload: '{"endpoint": 89483999222, "service": "${{ env.SERVICE_NAME }}", "version":"${{ needs.build.outputs.version }}", "version_notes": "${{ needs.build.outputs.version_notes}}" }'
+          description: ${{ needs.build.outputs.service_description }}
           auto-inactive: true
           initial-status: success
 
