@@ -114,7 +114,7 @@ jobs:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           title: "${{ env.SERVICE_NAME }}/${{ needs.build.outputs.version }}"
           automatic_release_tag: "${{ env.SERVICE_NAME}}/${{ needs.build.outputs.version }}"
-          prerelease: github.ref == 'refs/heads/main'
+          prerelease: false
 
       - name: deploy ${{ needs.build.outputs.version }}
         run: |
