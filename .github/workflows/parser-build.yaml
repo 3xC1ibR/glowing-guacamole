@@ -118,6 +118,13 @@ jobs:
 #          auto-inactive: github.event_name == 'workflow_dispatch'
 #          initial-status: success
 
+      - name: start deployment
+        uses: bobheadxi/deployments@v1
+        id: deployment
+        with:
+          step: start
+          token: ${{ secrets.GITHUB_TOKEN }}
+          env: release
       - name: update deployment status
         uses: bobheadxi/deployments@v1
         if: always()
@@ -127,6 +134,8 @@ jobs:
           status: ${{ job.status }}
           env: ${{ env.ENV }}
           payload: '{"endpoint": "${{ needs.build.outputs.endpoint }}", "service": "${{ env.SERVICE_NAME }}", "version":"${{ needs.build.outputs.version }}", "version_notes": "${{ needs.build.outputs.version_notes}}" }'
+          deployment_id: ${{ steps.deployment.outputs.deployment_id }}
+
 
 
       - uses: google-github-actions/release-please-action@v3
