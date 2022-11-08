@@ -1,0 +1,4 @@
+name: paser-service
+version: 5.0
+description: multiple choice parse
+version_notes: increase latency and introduce jitter
