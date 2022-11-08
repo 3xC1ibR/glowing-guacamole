@@ -93,7 +93,7 @@ jobs:
         run: |
           echo "======================== Your application is available at: ========================"
           echo 'done'
-          echo "${{ env.version }}
+          echo "${{ env.version }}"
           echo "==================================================================================="
   production-deploy:
     permissions:
