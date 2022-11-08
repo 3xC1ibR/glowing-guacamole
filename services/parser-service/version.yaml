@@ -1,4 +1,4 @@
 name: paser-service
-version: v7.0
-description: multiple choice parse
-version_notes: enables seething
+version: v6.3
+description: multiple choice parser
+version_notes: changes in my non standard named branch, for v6.3
