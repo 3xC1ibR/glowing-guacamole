@@ -10,6 +10,7 @@ on:
   pull_request:
     paths:
       - '.github/workflows/annealing-build.yaml'
+      - 'services/annealing-service/*'
 #    branches:
 #      - "release/annealing/v**"
 #      - '**'
