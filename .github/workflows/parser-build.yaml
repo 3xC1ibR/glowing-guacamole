@@ -83,6 +83,10 @@ jobs:
       - name: checkout repo
         uses: actions/checkout@v3
 
+      - name: deploy
+        run: |
+          python .github/workflows/deploy.py --env $ENV
+          
       - name: release vars
         run: |
           echo "version=${{ steps.get_service_version.outputs.result }}" >> $GITHUB_ENV
@@ -94,9 +98,6 @@ jobs:
             echo "ENV=dev" >> $GITHUB_ENV
           fi
 
-      - name: deploy
-        run: |
-          python .github/workflows/deploy.py --env $ENV
 
       - uses: chrnorm/deployment-action@v2
         name: Create GitHub deployment
@@ -115,8 +116,9 @@ jobs:
         uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          automatic_release_tag: "${{ env.SERVICE_NAME}}/${{ needs.build.outputs.version }}"
           title: "${{ env.SERVICE_NAME }}/${{ needs.build.outputs.version }}"
+          automatic_release_tag: "${{ env.SERVICE_NAME}}/${{ needs.build.outputs.version }}"
+          prerelease: github.ref == 'refs/heads/main'
 
       - name: deploy ${{ needs.build.outputs.version }}
         run: |
