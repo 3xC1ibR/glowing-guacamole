@@ -78,6 +78,15 @@ jobs:
       name: prod
       url: 'https://google.com'
     steps:
+      #    if: github.ref != 'refs/heads/main'
+      - name: Create Release
+        if: github.event_name == 'workflow_dispatch'
+        uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          title: "${{ env.SERVICE_NAME }}/${{ needs.build.outputs.version }}"
+          automatic_release_tag: "${{ env.SERVICE_NAME}}/${{ needs.build.outputs.version }}"
+          prerelease: false
       - name: checkout repo
         uses: actions/checkout@v3
       - name: eploy
