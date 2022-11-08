@@ -132,6 +132,7 @@ jobs:
           prerelease: false
       - uses: google-github-actions/release-please-action@v3
         with:
+          release-type: simple
           package-name: "${{ env.SERVICE_NAME }}/${{ needs.build.outputs.version }}"
 
       - name: deploy ${{ needs.build.outputs.version }}
