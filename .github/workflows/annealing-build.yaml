@@ -51,7 +51,7 @@ jobs:
     - name: Create Release
       uses: ncipollo/release-action@v1
       with:
-        name: ${{ env.SERVICE_NAME }}
+        name: "${{ env.SERVICE_NAME }}/${{ env.version }}"
         draft: ${{ github.ref != 'refs/heads/main' }}
         tag: "${{ env.SERVICE_NAME}}/${{ env.version }}"
   dev-deploy:
