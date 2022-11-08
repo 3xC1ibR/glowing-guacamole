@@ -4,9 +4,9 @@ on:
   # run manually
   workflow_dispatch:
   # run on dev branches
-  push:
-    branches:
-      - "main"
+#  push:
+#    branches:
+#      - "main"
   pull_request:
     paths:
       - '.github/workflows/parser-build.yaml'
