@@ -78,6 +78,7 @@ jobs:
   production-deploy:
     permissions:
       deployments: write
+      actions: write
 
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
@@ -100,7 +101,6 @@ jobs:
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           automatic_release_tag: "${{ env.SERVICE_NAME}}/${{ env.version }}"
-          prerelease: ${{ github.ref != 'refs/heads/main' }}
           title: "${{ env.SERVICE_NAME }}/${{ env.version }}"
 
       - uses: chrnorm/deployment-action@v2
@@ -109,7 +109,8 @@ jobs:
         with:
           token: '${{ github.token }}'
           environment: parser-prod
-          payload: '{"endpoint": 89483999222}'
+          payload: '{"endpoint": 89483999222, "service": "${{ env.SERVICE_NAME }}", "version":"${{ env.version }}" }'
           production-environment: true
           description: foobar
           auto-inactive: false
+          initial-status: success
