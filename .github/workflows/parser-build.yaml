@@ -61,6 +61,8 @@ jobs:
           token: '${{ github.token }}'
           environment: parser-dev
           payload: '{"endpoint": 89483999222}'
+          description: foobar
+          auto-inactive: true
 
       - name: eploy
         run: |
@@ -102,3 +104,6 @@ jobs:
           token: '${{ github.token }}'
           environment: parser-prod
           payload: '{"endpoint": 89483999222}'
+          production-environment: true
+          description: foobar
+          auto-inactive: false
