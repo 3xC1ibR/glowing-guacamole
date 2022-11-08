@@ -63,7 +63,7 @@ jobs:
           payload: '{"endpoint": 89483999222}'
           description: foobar
           auto-inactive: true
-          initial-status: active
+          initial-status: success
 
       - name: eploy
         run: |
