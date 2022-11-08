@@ -1,4 +1,4 @@
 name: paser-service
-version: v5.1
+version: v6.0
 description: multiple choice parse
-version_notes: increase latency and introduce jitter
+version_notes: adds dundershlugen and decomposed vector addribution 
