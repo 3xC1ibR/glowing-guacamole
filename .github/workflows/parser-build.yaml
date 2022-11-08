@@ -70,15 +70,16 @@ jobs:
           auto-inactive: true
           initial-status: success
 
-      - name: eploy
+      - name: eploy ${{ env.version }}
         run: |
           echo "======================== Your application is available at: ========================"
           echo 'done'
+          echo "${{ env.version }}
           echo "==================================================================================="
   production-deploy:
     permissions:
       deployments: write
-      actions: write
+      contents: write
 
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
