@@ -109,7 +109,7 @@ jobs:
         id: deployment
         with:
           token: '${{ github.token }}'
-          environment: parser-prod
+          environment: prod
           payload: '{"endpoint": 89483999222, "service": "${{ env.SERVICE_NAME }}", "version":"${{ env.version }}" }'
           production-environment: true
           description: foobar
