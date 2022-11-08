@@ -66,11 +66,12 @@ jobs:
     - name: deploy
       run: |
         python .github/workflows/deploy.py --env $ENV
+        echo "endpoint=$(cat somefile)" >> $GITHUB_ENV
     outputs:
       version: ${{ steps.get_version.outputs.result }}
       version_notes: ${{ steps.get_version_notes.outputs.result }}
       service_description: ${{ steps.get_service_description.outputs.result }}
-      endpoint: ${{ env.ENV }}
+      endpoint: ${{ env.endpoint }}
 
   deploy:
     permissions:
