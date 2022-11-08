@@ -47,18 +47,6 @@ jobs:
         echo "endpoint=$(cat somefile)" >> $GITHUB_ENV
         echo "version=$(cat $SERVICE_PATH/version)" >> $GITHUB_ENV
         echo "tag=${{ env.SERVICE_NAME}}/$(cat $SERVICE_PATH/version)" >> $GITHUB_ENV
-    - name: Create Release
-      uses: ncipollo/release-action@v1
-      with:
-        name: "${{ env.SERVICE_NAME }}/${{ env.version }}"
-        draft: ${{ github.ref != 'refs/heads/main' }}
-        tag: "${{ env.SERVICE_NAME}}/${{ env.version }}"
-    - uses: "marvinpinto/action-automatic-releases@latest"
-      with:
-        repo_token: "${{ secrets.GITHUB_TOKEN }}"
-        automatic_release_tag: "${{ env.SERVICE_NAME}}/${{ env.version }}"
-        prerelease: ${{ github.ref != 'refs/heads/main' }}
-        title: "${{ env.SERVICE_NAME }}/${{ env.version }}"
 
   dev-deploy:
     if: github.ref != 'refs/heads/main'
@@ -79,12 +67,19 @@ jobs:
     needs: build
     environment:
       name: prod
-      url: 'https://google.com'
+      url: '1312453412341234'
     steps:
       - name: checkout repo
         uses: actions/checkout@v3
       - name: eploy
         run: |
           echo 'done'
+      - name: Create Release
+        uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: "${{ env.SERVICE_NAME}}/${{ env.version }}"
+          prerelease: ${{ github.ref != 'refs/heads/main' }}
+          title: "${{ env.SERVICE_NAME }}/${{ env.version }}"
 
 
