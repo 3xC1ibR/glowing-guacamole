@@ -26,7 +26,7 @@ jobs:
     steps:
     - name: checkout repo
       uses: actions/checkout@v3
-      
+
     - name: Dump GitHub context
       id: github_context_step
       run: echo '${{ toJSON(github) }}'
@@ -61,7 +61,7 @@ jobs:
 
     - name: set variables
       run: |
-        if ${{ github.ref == 'refs/heads/main' }}; then
+        if ${{ github.event_name == 'workflow_dispatch' }}; then
           echo "ENV=prod" >> $GITHUB_ENV
         else
           echo "ENV=dev" >> $GITHUB_ENV
@@ -103,7 +103,7 @@ jobs:
         run: |
           echo "version=${{ steps.get_service_version.outputs.result }}" >> $GITHUB_ENV
           echo "tag=${{ env.SERVICE_NAME}}/$(cat $SERVICE_PATH/version)" >> $GITHUB_ENV
-          if ${{ github.ref == 'refs/heads/main' }}; then
+          if ${{ github.event_name == 'workflow_dispatch' }}; then
             echo "ENV=prod" >> $GITHUB_ENV
           else
             echo "ENV=dev" >> $GITHUB_ENV
@@ -117,13 +117,13 @@ jobs:
           token: '${{ github.token }}'
           environment: ${{ env.ENV }}
           payload: '{"endpoint": "${{ needs.build.outputs.endpoint }}", "service": "${{ env.SERVICE_NAME }}", "version":"${{ needs.build.outputs.version }}", "version_notes": "${{ needs.build.outputs.version_notes}}" }'
-          production-environment: github.ref == 'refs/heads/main'
+          production-environment: github.event_name == 'workflow_dispatch'
           description: ${{ needs.build.outputs.service_description }}
-          auto-inactive: github.ref == 'refs/heads/main'
+          auto-inactive: github.event_name == 'workflow_dispatch'
           initial-status: success
 
       - name: Create Release
-        if: github.ref == 'refs/heads/main'
+        if: github.event_name == 'workflow_dispatch'
         uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
