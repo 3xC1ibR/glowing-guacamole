@@ -1,4 +1,4 @@
 name: paser-service
-version: v6.2
+version: v6.2.8
 description: multiple choice parse
-version_notes: removes shilling points and disaster relief
+version_notes: another branch off of 6.2, this is 6.2.8
