@@ -53,6 +53,13 @@ jobs:
         name: "${{ env.SERVICE_NAME }}/${{ env.version }}"
         draft: ${{ github.ref != 'refs/heads/main' }}
         tag: "${{ env.SERVICE_NAME}}/${{ env.version }}"
+    - uses: "marvinpinto/action-automatic-releases@latest"
+      with:
+        repo_token: "${{ secrets.GITHUB_TOKEN }}"
+        automatic_release_tag: "${{ env.SERVICE_NAME}}/${{ env.version }}"
+        prerelease: ${{ github.ref != 'refs/heads/main' }}
+        title: "${{ env.SERVICE_NAME }}/${{ env.version }}"
+
   dev-deploy:
     if: github.ref != 'refs/heads/main'
     runs-on: ubuntu-latest
