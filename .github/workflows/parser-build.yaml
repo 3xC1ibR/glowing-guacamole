@@ -130,6 +130,9 @@ jobs:
           title: "${{ env.SERVICE_NAME }}/${{ needs.build.outputs.version }}"
           automatic_release_tag: "${{ env.SERVICE_NAME}}/${{ needs.build.outputs.version }}"
           prerelease: false
+      - uses: google-github-actions/release-please-action@v3
+        with:
+          package-name: "${{ env.SERVICE_NAME }}/${{ needs.build.outputs.version }}"
 
       - name: deploy ${{ needs.build.outputs.version }}
         run: |
