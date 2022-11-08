@@ -24,6 +24,25 @@ jobs:
     steps:
     - name: checkout repo
       uses: actions/checkout@v3
+
+    - name: description
+      id: get_service_description
+      uses: mikefarah/yq@master
+      with:
+        cmd: yq '.description' 'services/parser-service/version.yaml'
+
+    - name: version
+      id: get_version
+      uses: mikefarah/yq@master
+      with:
+        cmd: yq '.version' 'services/parser-service/version.yaml'
+
+    - name: version notes
+      id: get_version_notes
+      uses: mikefarah/yq@master
+      with:
+        cmd: yq '.version_notes' 'services/parser-service/version.yaml'
+
     - name: set variables
       run: |
         if ${{ github.ref == 'refs/heads/main' }}; then
@@ -56,7 +75,7 @@ jobs:
 
       - name: release vars
         run: |
-          echo "version=$(cat $SERVICE_PATH/version)" >> $GITHUB_ENV
+          echo "version=${{ steps.get_service_version.outputs.result }}" >> $GITHUB_ENV
           echo "tag=${{ env.SERVICE_NAME}}/$(cat $SERVICE_PATH/version)" >> $GITHUB_ENV
 
       - name: Create GitHub deployment
@@ -65,12 +84,12 @@ jobs:
         with:
           token: '${{ github.token }}'
           environment: dev
-          payload: '{"endpoint": 89483999222, "service": "${{ env.SERVICE_NAME }}", "version":"${{ env.version }}" }'
-          description: foobar
+          payload: '{"endpoint": 89483999222, "service": "${{ env.SERVICE_NAME }}", "version":"${{ steps.get_version.outputs.result }}", "version_notes": "${{ steps.get_version_notes.outputs.result }}" }'
+          description: ${{ steps.get_service_description.outputs.result }}
           auto-inactive: true
           initial-status: success
 
-      - name: eploy ${{ env.version }}
+      - name: deploy ${{ env.version }}
         run: |
           echo "======================== Your application is available at: ========================"
           echo 'done'
